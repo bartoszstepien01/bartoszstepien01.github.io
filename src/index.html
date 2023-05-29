@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css"/>
+	<title>Document</title>
+</head>
+<body>
+	<div id="roll">
+		<div id="steps">
+			<div id="s0" class="step">
+				<div class="flex h-full">
+					<div class="ml-5">
+						<h1 class="py-5 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500 font-extrabold text-8xl">Bartosz Stępień</h1>
+						<p class="text-3xl font-semibold text-gray-50">Software Developer.</p>
+					</div>
+					<div class="separator"></div>
+					<div id="xd" class="bg-white h-full flex-1">
+						<img src="img/test.jpg" alt="bg" class="h-full object-cover">
+					</div>
+				</div>
+			</div>
+			<div id="s1" class="step">World</div>
+			<div id="s2" class="step">How's it going</div>
+		</div>
+		<div id="wrapper">
+			<div id="pane"></div>
+		</div>
+	</div>
+	<script type="module">
+		import Roll from "rolljs";
+
+		var roll = Roll.DOM("#wrapper", "#pane", "#steps", ".step", 100);
+
+		var views = document.querySelectorAll(".step");
+		views[0].className = "step curr";
+
+		roll.on("step", Roll.stepHandler(roll, views, "prev", "next", "curr", true));
+	</script>
+</body>
+</html>

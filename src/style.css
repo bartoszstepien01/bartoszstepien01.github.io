@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	font-family: 'Montserrat';
+}
+
+#roll {
+	position: absolute;
+	top: 0; bottom: 0; left: 0; right: 0;
+}
+
+#wrapper {
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+#steps {
+	position: absolute;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.step {
+	width: 100%;
+	height: 100%;
+
+	position: absolute;
+	top: 100%;
+	left: 0;
+
+	overflow: hidden;
+
+	transition: top .5s;
+}
+
+.step.prev {
+	top: -100%;
+}
+
+.step.next {
+	top: 100%;
+}
+
+.step.curr {
+	top: 0;
+}
+
+#s0 {
+	@apply bg-slate-900;
+}
+
+.separator {
+	width: 0;
+	height: 0;
+	border-bottom: 100vh solid transparent;
+	border-left: 30vh solid rgb(15 23 42);
+	margin-right: -29.9vh;
+	z-index: 1;
+}
