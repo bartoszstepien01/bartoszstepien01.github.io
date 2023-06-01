@@ -7,25 +7,71 @@
 	<link rel="stylesheet" href="style.css"/>
 	<title>Document</title>
 </head>
-<body>
+<body class="bg-slate-900">
+	<script type="module">
+		import '@fortawesome/fontawesome-free/css/all.css';
+	</script>
 	<div id="roll">
 		<div id="steps">
-			<div id="s0" class="step">
+			<div id="s0" class="step" style="position: relative;">
 				<div class="flex h-full">
-					<div class="ml-5">
-						<h1 class="py-5 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500 font-extrabold text-8xl">Bartosz Stępień</h1>
-						<p class="text-3xl font-semibold text-gray-50">Software Developer.</p>
+					<div class="bg-blue-400 w-[30vh] vertical-stripe-left relative">
+						<div class="tl absolute left-0 top-0"></div>
+						<div class="bl absolute left-0 bottom-0"></div>
+						<div class="tr absolute right-0 top-0"></div>
+						<div class="br absolute right-0 bottom-0"></div>
 					</div>
-					<div class="separator"></div>
-					<div id="xd" class="bg-white h-full flex-1">
-						<img src="img/test.jpg" alt="bg" class="h-full object-cover">
+					<div class="ml-5 self-center" id="central">
+						<h1 class="py-3 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500 font-extrabold text-8xl">Bartosz Stępień</h1>
+						<p class="text-3xl font-semibold text-gray-50 pb-3">A hobbyist programmer and computer enthusiast.</p>
+						<a href="#" class="text-white text-xl font-medium relative -z-0 link px-1 interactable">
+							<i class="fa-brands fa-github"></i>&nbsp; Check out my GitHub profile...
+							<div class="-z-10 h-2 bg-gradient-to-r from-cyan-500 to-blue-500 mt-[-0.75rem] absolute left-0 right-0"></div>
+						</a>
+						<div class="h-1"></div>
+						<a href="#" class="text-white text-xl font-medium relative -z-0 link px-1 interactable">
+							<i class="fa-solid fa-envelope"></i>&nbsp; ...or contact me via e-mail
+							<div class="-z-10 h-2 bg-gradient-to-r from-cyan-500 to-blue-500 mt-[-0.75rem] absolute left-0 right-0"></div>
+						</a>
+					</div>
+					<div class="flex-1 flex pl-2">
+						<div class="bg-yellow-400 w-10 vertical-stripe-right relative">
+							<div class="tl absolute left-0 top-0"></div>
+							<div class="bl absolute left-0 bottom-0"></div>
+							<div class="tr absolute right-0 top-0"></div>
+							<div class="br absolute right-0 bottom-0"></div>
+						</div>
+						<div class="bg-red-400 w-10 vertical-stripe-right relative delay-100">
+							<div class="tl absolute left-0 top-0"></div>
+							<div class="bl absolute left-0 bottom-0"></div>
+							<div class="tr absolute right-0 top-0"></div>
+							<div class="br absolute right-0 bottom-0"></div>
+						</div>
+						<div class="bg-green-400 w-10 vertical-stripe-right relative delay-200">
+							<div class="tl absolute left-0 top-0"></div>
+							<div class="bl absolute left-0 bottom-0"></div>
+							<div class="tr absolute right-0 top-0"></div>
+							<div class="br absolute right-0 bottom-0"></div>
+						</div>
+						<div class="w-full h-[104.4vh] relative delay-300" id="thumbnail">
+							<img class="w-full h-[104.4vh] object-cover" src="img/bg.jpg" alt="test">
+							<div class="tl absolute left-0 top-0"></div>
+							<div class="bl absolute left-0 bottom-0"></div>
+							<div class="tr absolute right-0 top-0"></div>
+							<div class="br absolute right-0 bottom-0"></div>
+						</div>
 					</div>
 				</div>
+				<div class="text-white absolute bottom-6 flex w-[300px]" id="scrolldown">
+					<div class="mouse"></div>
+				</div>
 			</div>
-			<div id="s1" class="step">World</div>
+			<div id="s1" class="step">
+				<div class="bg-yellow-400 border-t-[100vh] border-r-[30vh] border-solid border-t-transparent border-r-slate-900"></div>
+			</div>
 			<div id="s2" class="step">How's it going</div>
 		</div>
-		<div id="wrapper">
+		<div id="wrapper" class="z-50">
 			<div id="pane"></div>
 		</div>
 	</div>
@@ -38,6 +84,116 @@
 		views[0].className = "step curr";
 
 		roll.on("step", Roll.stepHandler(roll, views, "prev", "next", "curr", true));
+
+		let width = document.querySelector('#thumbnail').clientWidth;
+		document.querySelector('#scrolldown').style.left = `calc((100vw - 7.5rem - ${width}px) / 2)`;
+
+		function inside(point, vs) {			
+			var x = point[0], y = point[1];
+			
+			var inside = false;
+			for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+				var xi = vs[i][0], yi = vs[i][1];
+				var xj = vs[j][0], yj = vs[j][1];
+				
+				var intersect = ((yi > y) != (yj > y))
+					&& (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+				if (intersect) inside = !inside;
+			}
+			
+			return inside;
+		};
+
+		let stripesList = [...document.querySelectorAll('.vertical-stripe-right')];
+		stripesList.push(document.querySelector('#thumbnail'));
+		stripesList.reverse();
+
+		let currentRollProgress = 0;
+
+		window.addEventListener('mousemove', function(e) {
+			if(currentRollProgress !== 0) return;
+			let check = false;
+
+			for(const stripe of stripesList) {
+				if(!check) {
+					var polygon = [
+						[stripe.querySelector('.bl').getBoundingClientRect().x, stripe.querySelector('.bl').getBoundingClientRect().y],
+						[stripe.querySelector('.br').getBoundingClientRect().x, stripe.querySelector('.br').getBoundingClientRect().y],
+						[stripe.querySelector('.tr').getBoundingClientRect().x, stripe.querySelector('.tr').getBoundingClientRect().y],
+						[stripe.querySelector('.tl').getBoundingClientRect().x, stripe.querySelector('.tl').getBoundingClientRect().y],
+					];
+
+					check |= inside([e.x, e.y], polygon);
+				}
+				if(stripe.id !== 'thumbnail') {
+					if(!check) stripe.style.setProperty('--offset', '0');
+					else stripe.style.setProperty('--offset', '-1.1rem');
+				} else {
+					if(!check) stripe.style.setProperty('--offset', '0');
+					else stripe.style.setProperty('--offset', '-1.8rem');
+				}
+			}
+
+			var polygon = [
+				[document.querySelector('.vertical-stripe-left').querySelector('.bl').getBoundingClientRect().x, document.querySelector('.vertical-stripe-left').querySelector('.bl').getBoundingClientRect().y],
+				[document.querySelector('.vertical-stripe-left').querySelector('.br').getBoundingClientRect().x, document.querySelector('.vertical-stripe-left').querySelector('.br').getBoundingClientRect().y],
+				[document.querySelector('.vertical-stripe-left').querySelector('.tr').getBoundingClientRect().x, document.querySelector('.vertical-stripe-left').querySelector('.tr').getBoundingClientRect().y],
+				[document.querySelector('.vertical-stripe-left').querySelector('.tl').getBoundingClientRect().x, document.querySelector('.vertical-stripe-left').querySelector('.tl').getBoundingClientRect().y],
+			];
+
+			if(inside([e.x, e.y], polygon)) {
+				document.querySelector('.vertical-stripe-left').style.setProperty('--offset', '1.1rem');
+			} else {
+				document.querySelector('.vertical-stripe-left').style.setProperty('--offset', '0');
+			}
+		});
+
+		roll.on('roll', (step, stepProgress, position, totalProgress) => {
+			currentRollProgress = stepProgress;
+
+			if(stepProgress === 0) document.querySelector('.vertical-stripe-left').classList.add('transition');
+			else document.querySelector('.vertical-stripe-left').classList.remove('transition');
+			document.querySelector('.vertical-stripe-left').style.setProperty('--offset', 10 * stepProgress + 'rem');
+
+			for(const stripe of stripesList) {
+				if(stepProgress === 0) {
+					stripe.classList.add('transition');
+					stripe.classList.remove('cancel-delay');
+				}
+				else {
+					stripe.classList.remove('transition');
+					stripe.classList.add('cancel-delay')
+				}
+
+				if(stripe.id !== 'thumbnail') {
+					stripe.style.setProperty('--offset', -15 * stepProgress + 'rem');
+				} else {
+					stripe.style.setProperty('--offset', -30 * stepProgress + 'rem');
+				}
+			}
+
+			//document.querySelector('#thumbnail').style.setProperty('--scale', 1.09 + stepProgress + '');
+
+			document.querySelector('#central').style.setProperty('--offset', -20 * stepProgress + 'rem');
+			document.querySelector('#central').style.setProperty('--opacity', 1 - 2 * stepProgress + '');
+
+			document.querySelector('#scrolldown').style.setProperty('--opacity', 1 - 2 * stepProgress + '');
+		});
+
+		// library bug fix
+		let firstStep = true;
+
+		roll.on('step', function(curr, last) {
+			if(firstStep) {
+				firstStep = false;
+				return;
+			}
+			document.querySelector('#wrapper').scrollTo({ top: curr * (100 + window.innerHeight), behavior: 'smooth' });
+			// temporarily disable scrolling
+			console.log('dupa chuj');
+			document.querySelector('#wrapper').classList.add('no-scrolling');
+			setTimeout(() => document.querySelector('#wrapper').classList.remove('no-scrolling'), 200);
+		});
 	</script>
 </body>
 </html>
