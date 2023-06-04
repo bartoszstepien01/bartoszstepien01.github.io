@@ -67,7 +67,65 @@
 				</div>
 			</div>
 			<div id="s1" class="step">
-				<div class="bg-yellow-400 border-t-[100vh] border-r-[30vh] border-solid border-t-transparent border-r-slate-900"></div>
+				<div class="flex h-full items-center">
+					<div class="bg-red-400 w-[30vh] vertical-stripe-left relative flex-shrink-0">
+						<div class="tl absolute left-0 top-0"></div>
+						<div class="bl absolute left-0 bottom-0"></div>
+						<div class="tr absolute right-0 top-0"></div>
+						<div class="br absolute right-0 bottom-0"></div>
+					</div>
+					<div class="flex divide-x-2">
+						<div class="text-justify flex-1 pr-8">
+							<h1 class="py-3 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 font-extrabold text-7xl">About me</h1>
+							<p class="text-xl font-medium text-gray-50 pb-3">Ever since I remember, I've always been interested in computers. When I was a little kid I'd often gaze in awe at various programs yearning to be able to make one myself. Hence my dream of becoming a programmer.</p>
+							<p class="text-xl font-medium text-gray-50 pb-3">My journey began at the age of 12 when I started experimenting with C++. After making some small projects and getting the hang of the fundamentals, I moved on to other languages like C#, Python and JavaScript.</p>
+							<p class="text-xl font-medium text-gray-50 pb-3">Now I'm 18 years old. I've never lost my childhood passion and am still keen on extending my current knowledge and developing new abilities. Below are some of the projects I've made. They are a testimony of everything I've learned throughout this few years.</p>
+						</div>
+						<div class="flex-1 pl-8">
+							<h1 class="py-3 text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-800 font-extrabold text-7xl">My skills</h1>
+							<p class="text-white text-xl font-medium mb-2">Technology</p>
+							<div class="flex flex-col gap-2">
+								<div class="flex bg-slate-800 text-white items-center text-lg px-4 py-2 rounded-sm shadow">
+									<i class="fa-brands fa-python text-blue-500 text-4xl"></i>
+									<p class="ml-4">Python</p>
+									<p class="ml-2 text-slate-500 text-base">(Flask, requests, BeautifulSoup)</p>
+									<p class="ml-auto">intermediate</p>
+								</div>
+								<div class="flex bg-slate-800 text-white items-center text-lg px-4 py-2 rounded-sm shadow">
+									<i class="fa-brands fa-js text-yellow-400 text-4xl"></i>
+									<p class="ml-4">JavaScript</p>
+									<p class="ml-2 text-slate-500 text-base">(Tailwind, React Native, Svelte)</p>
+									<p class="ml-auto">intermediate</p>
+								</div>
+								<div class="flex bg-slate-800 text-white items-center text-lg px-4 py-2 rounded-sm shadow">
+									<p>C++</p>
+									<p class="ml-auto">intermediate</p>
+								</div>
+								<div class="flex bg-slate-800 text-white items-center text-lg px-4 py-2 rounded-sm shadow">
+									<p>C#</p>
+									<p class="ml-auto">basic</p>
+								</div>
+							</div>
+							<p class="text-white text-xl font-medium mt-4 mb-2">Languages</p>
+							<div class="flex flex-col gap-2">
+								<div class="flex bg-slate-800 text-white items-center text-lg px-4 py-2 rounded-sm shadow">
+									<p>English</p>
+									<p class="ml-auto">fluent (C1)</p>
+								</div>
+								<div class="flex bg-slate-800 text-white items-center text-lg px-4 py-2 rounded-sm shadow">
+									<p>German</p>
+									<p class="ml-auto">intermediate (B1)</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="bg-yellow-400 w-[30vh] vertical-stripe-right relative flex-shrink-0">
+						<div class="tl absolute left-0 top-0"></div>
+						<div class="bl absolute left-0 bottom-0"></div>
+						<div class="tr absolute right-0 top-0"></div>
+						<div class="br absolute right-0 bottom-0"></div>
+					</div>
+				</div>
 			</div>
 			<div id="s2" class="step">How's it going</div>
 		</div>
@@ -125,13 +183,9 @@
 
 					check |= inside([e.x, e.y], polygon);
 				}
-				if(stripe.id !== 'thumbnail') {
-					if(!check) stripe.style.setProperty('--offset', '0');
-					else stripe.style.setProperty('--offset', '-1.1rem');
-				} else {
-					if(!check) stripe.style.setProperty('--offset', '0');
-					else stripe.style.setProperty('--offset', '-1.8rem');
-				}
+
+				if(!check) stripe.style.setProperty('--offset', '0');
+				else stripe.style.setProperty('--offset', '-1.1rem');
 			}
 
 			var polygon = [
@@ -149,11 +203,13 @@
 		});
 
 		roll.on('roll', (step, stepProgress, position, totalProgress) => {
+			let full = (window.innerWidth - 120 - width) / 2;
 			currentRollProgress = stepProgress;
 
 			if(stepProgress === 0) document.querySelector('.vertical-stripe-left').classList.add('transition');
 			else document.querySelector('.vertical-stripe-left').classList.remove('transition');
-			document.querySelector('.vertical-stripe-left').style.setProperty('--offset', 10 * stepProgress + 'rem');
+			document.querySelector('.vertical-stripe-left').style.setProperty('--offset', full * stepProgress + 'px');
+			console.log(full * stepProgress + 'px')
 
 			for(const stripe of stripesList) {
 				if(stepProgress === 0) {
@@ -166,9 +222,9 @@
 				}
 
 				if(stripe.id !== 'thumbnail') {
-					stripe.style.setProperty('--offset', -15 * stepProgress + 'rem');
+					stripe.style.setProperty('--offset', -full * stepProgress + 'px');
 				} else {
-					stripe.style.setProperty('--offset', -30 * stepProgress + 'rem');
+					stripe.style.setProperty('--offset', -full * stepProgress + 'px');
 				}
 			}
 
@@ -188,7 +244,7 @@
 				firstStep = false;
 				return;
 			}
-			document.querySelector('#wrapper').scrollTo({ top: curr * (100 + window.innerHeight), behavior: 'smooth' });
+			document.querySelector('#wrapper').scrollTo({ top: curr * (200 + window.innerHeight), behavior: 'smooth' });
 			// temporarily disable scrolling
 			console.log('dupa chuj');
 			document.querySelector('#wrapper').classList.add('no-scrolling');
