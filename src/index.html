@@ -67,14 +67,14 @@
 				</div>
 			</div>
 			<div id="s1" class="step">
-				<div class="flex h-full items-center">
+				<div class="flex w-full h-full">
 					<div class="bg-red-400 w-[30vh] vertical-stripe-left relative flex-shrink-0">
 						<div class="tl absolute left-0 top-0"></div>
 						<div class="bl absolute left-0 bottom-0"></div>
 						<div class="tr absolute right-0 top-0"></div>
 						<div class="br absolute right-0 bottom-0"></div>
 					</div>
-					<div class="flex divide-x-2">
+					<div class="flex divide-x-2 flex-grow-0 self-center" id="central">
 						<div class="text-justify flex-1 pr-8">
 							<h1 class="py-3 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 font-extrabold text-7xl">About me</h1>
 							<p class="text-xl font-medium text-gray-50 pb-3">Ever since I remember, I've always been interested in computers. When I was a little kid I'd often gaze in awe at various programs yearning to be able to make one myself. Hence my dream of becoming a programmer.</p>
@@ -119,7 +119,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="bg-yellow-400 w-[30vh] vertical-stripe-right relative flex-shrink-0">
+					<div class="bg-yellow-400 w-[30vh] vertical-stripe-right relative flex-shrink-0 self-end">
 						<div class="tl absolute left-0 top-0"></div>
 						<div class="bl absolute left-0 bottom-0"></div>
 						<div class="tr absolute right-0 top-0"></div>
@@ -127,7 +127,44 @@
 					</div>
 				</div>
 			</div>
-			<div id="s2" class="step">How's it going</div>
+			<div id="s2" class="step">
+				<div class="flex w-full h-full">
+					<div class="bg-green-400 w-[30vh] vertical-stripe-left relative flex-shrink-0">
+						<div class="tl absolute left-0 top-0"></div>
+						<div class="bl absolute left-0 bottom-0"></div>
+						<div class="tr absolute right-0 top-0"></div>
+						<div class="br absolute right-0 bottom-0"></div>
+					</div>
+					<div class="text-justify flex-1 pr-8 self-center">
+						<h1 class="py-3 text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-green-800 font-extrabold text-7xl">gd-yt</h1>
+						<p class="text-xl font-medium text-gray-50 pb-3">gd-yt is a simple Geometry Dash modification that lets users use songs from YouTube in their custom levels.</p>
+						<p class="text-xl font-medium text-gray-50 pb-3">This project compiles itself to a DLL file which, after being injected into a Geometry Dash process, can change the inner workings of the game. It does so by utilising a technique called hooking. Whenever certain functions in the game are called the mod diverts the control flow of the main application in order to extend the already existing functionality.</p>
+						<p class="text-xl font-medium text-gray-50 pb-3">In this case the modification enables users to use YouTube songs in their custom levels. By default players are limited to the tracks uploaded on Newgrounds and manually allowed by the developer. Although it provides creators with an impressive musical repertoire it still doesn't include every single existing song. This modification aims to solve this problem.</p>
+						<p class="text-xl font-medium text-gray-50 pb-3">To make this project I used the default DLL file template in Visual Studio 2022. It was fully written in the C++ programming language. It utilises many different libraries, including MinHook, gd.h and nlohmann's json.</p>
+						<a href="#" class="text-white text-xl font-medium relative -z-0 link px-1 interactable">
+							<i class="fa-brands fa-github"></i>&nbsp; Check it out
+							<div class="-z-10 h-2 bg-gradient-to-r from-green-500 to-green-800 mt-[-0.75rem] absolute left-0 right-0"></div>
+						</a>
+						<p class="text-white text-xl font-medium mb-2 mt-8">Tech stack</p>
+						<div class="flex flex-col gap-2">
+							<div class="flex bg-slate-800 text-white items-center text-lg px-4 py-2 rounded-sm shadow">
+								<p>C++</p>
+							</div>
+						</div>
+					</div>
+					<div class="bg-green-400 w-14 vertical-stripe-right relative">
+						<div class="tl absolute left-0 top-0"></div>
+						<div class="bl absolute left-0 bottom-0"></div>
+						<div class="tr absolute right-0 top-0"></div>
+						<div class="br absolute right-0 bottom-0"></div>
+					</div>
+					<div class="w-[70vh] h-full shadow" style="clip-path: polygon(30vh 0vh, 100% 0%, 100% 100%, 0% 100%);">
+						<img class="object-cover shadow h-1/2" src="img/gd-yt.png" alt="test" style="transform: translate(140px, 0);">
+						<img class="object-cover shadow h-1/2" src="img/gd-yt2.png" alt="test" >
+					</div>
+				</div>
+			</div>
+			<div id="s3" class="step"></div>
 		</div>
 		<div id="wrapper" class="z-50">
 			<div id="pane"></div>
@@ -135,6 +172,8 @@
 	</div>
 	<script type="module">
 		import Roll from "rolljs";
+		import Page0 from './js/page0.js';
+		import Page1 from './js/page1.js';
 
 		var roll = Roll.DOM("#wrapper", "#pane", "#steps", ".step", 100);
 
@@ -143,112 +182,40 @@
 
 		roll.on("step", Roll.stepHandler(roll, views, "prev", "next", "curr", true));
 
-		let width = document.querySelector('#thumbnail').clientWidth;
-		document.querySelector('#scrolldown').style.left = `calc((100vw - 7.5rem - ${width}px) / 2)`;
+		Page0.init(document.querySelector('#s0'));
+		Page1.init(document.querySelector('#s1'));
+		let pageHandlers = [Page0, Page1];
 
-		function inside(point, vs) {			
-			var x = point[0], y = point[1];
-			
-			var inside = false;
-			for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-				var xi = vs[i][0], yi = vs[i][1];
-				var xj = vs[j][0], yj = vs[j][1];
-				
-				var intersect = ((yi > y) != (yj > y))
-					&& (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-				if (intersect) inside = !inside;
-			}
-			
-			return inside;
-		};
-
-		let stripesList = [...document.querySelectorAll('.vertical-stripe-right')];
-		stripesList.push(document.querySelector('#thumbnail'));
-		stripesList.reverse();
-
+		let currentStep = 0;
 		let currentRollProgress = 0;
 
-		window.addEventListener('mousemove', function(e) {
-			if(currentRollProgress !== 0) return;
-			let check = false;
-
-			for(const stripe of stripesList) {
-				if(!check) {
-					var polygon = [
-						[stripe.querySelector('.bl').getBoundingClientRect().x, stripe.querySelector('.bl').getBoundingClientRect().y],
-						[stripe.querySelector('.br').getBoundingClientRect().x, stripe.querySelector('.br').getBoundingClientRect().y],
-						[stripe.querySelector('.tr').getBoundingClientRect().x, stripe.querySelector('.tr').getBoundingClientRect().y],
-						[stripe.querySelector('.tl').getBoundingClientRect().x, stripe.querySelector('.tl').getBoundingClientRect().y],
-					];
-
-					check |= inside([e.x, e.y], polygon);
-				}
-
-				if(!check) stripe.style.setProperty('--offset', '0');
-				else stripe.style.setProperty('--offset', '-1.1rem');
-			}
-
-			var polygon = [
-				[document.querySelector('.vertical-stripe-left').querySelector('.bl').getBoundingClientRect().x, document.querySelector('.vertical-stripe-left').querySelector('.bl').getBoundingClientRect().y],
-				[document.querySelector('.vertical-stripe-left').querySelector('.br').getBoundingClientRect().x, document.querySelector('.vertical-stripe-left').querySelector('.br').getBoundingClientRect().y],
-				[document.querySelector('.vertical-stripe-left').querySelector('.tr').getBoundingClientRect().x, document.querySelector('.vertical-stripe-left').querySelector('.tr').getBoundingClientRect().y],
-				[document.querySelector('.vertical-stripe-left').querySelector('.tl').getBoundingClientRect().x, document.querySelector('.vertical-stripe-left').querySelector('.tl').getBoundingClientRect().y],
-			];
-
-			if(inside([e.x, e.y], polygon)) {
-				document.querySelector('.vertical-stripe-left').style.setProperty('--offset', '1.1rem');
-			} else {
-				document.querySelector('.vertical-stripe-left').style.setProperty('--offset', '0');
-			}
-		});
-
 		roll.on('roll', (step, stepProgress, position, totalProgress) => {
-			let full = (window.innerWidth - 120 - width) / 2;
 			currentRollProgress = stepProgress;
 
-			if(stepProgress === 0) document.querySelector('.vertical-stripe-left').classList.add('transition');
-			else document.querySelector('.vertical-stripe-left').classList.remove('transition');
-			document.querySelector('.vertical-stripe-left').style.setProperty('--offset', full * stepProgress + 'px');
-			console.log(full * stepProgress + 'px')
-
-			for(const stripe of stripesList) {
-				if(stepProgress === 0) {
-					stripe.classList.add('transition');
-					stripe.classList.remove('cancel-delay');
-				}
-				else {
-					stripe.classList.remove('transition');
-					stripe.classList.add('cancel-delay')
-				}
-
-				if(stripe.id !== 'thumbnail') {
-					stripe.style.setProperty('--offset', -full * stepProgress + 'px');
-				} else {
-					stripe.style.setProperty('--offset', -full * stepProgress + 'px');
-				}
-			}
-
-			//document.querySelector('#thumbnail').style.setProperty('--scale', 1.09 + stepProgress + '');
-
-			document.querySelector('#central').style.setProperty('--offset', -20 * stepProgress + 'rem');
-			document.querySelector('#central').style.setProperty('--opacity', 1 - 2 * stepProgress + '');
-
-			document.querySelector('#scrolldown').style.setProperty('--opacity', 1 - 2 * stepProgress + '');
+			if(currentStep >= pageHandlers.length) return;
+			pageHandlers[currentStep].onRoll(step, stepProgress, position, totalProgress);
 		});
 
 		// library bug fix
 		let firstStep = true;
 
 		roll.on('step', function(curr, last) {
+			currentStep = curr;
+
 			if(firstStep) {
 				firstStep = false;
 				return;
 			}
-			document.querySelector('#wrapper').scrollTo({ top: curr * (200 + window.innerHeight), behavior: 'smooth' });
+			document.querySelector('#wrapper').scrollTo({ top: curr * (100 + window.innerHeight), behavior: 'smooth' });
+
 			// temporarily disable scrolling
-			console.log('dupa chuj');
 			document.querySelector('#wrapper').classList.add('no-scrolling');
 			setTimeout(() => document.querySelector('#wrapper').classList.remove('no-scrolling'), 200);
+		});
+
+		window.addEventListener('mousemove', e => {
+			if(currentRollProgress !== 0 || currentStep >= pageHandlers.length) return;
+			pageHandlers[currentStep].onMouseMove(e);
 		});
 	</script>
 </body>

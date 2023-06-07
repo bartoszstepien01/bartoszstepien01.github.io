@@ -121,7 +121,7 @@ body {
 .vertical-stripe-left {
 	@apply h-[104.4vh] shadow transition ease-out delay-0 duration-500;
 	transform-origin: top right; 
-	transform: translate(var(--offset, 0), 0) scale(var(--scale, 3)) rotate(16.69924423deg);
+	transform: translate(var(--offset, 0), 0) scale(var(--scale, 4)) rotate(16.69924423deg);
 }
 
 .vertical-stripe-left-hover {
@@ -131,7 +131,7 @@ body {
 .vertical-stripe-right {
 	@apply h-[104.4vh] shadow transition ease-out duration-500;
 	transform-origin: bottom left; 
-	transform: translate(var(--offset, 0), 0) scale(var(--scale, 3)) rotate(16.69924423deg);
+	transform: translate(var(--offset, 0), 0) scale(var(--scale, 4)) rotate(16.69924423deg);
 }
 
 .vertical-stripe-right-hover {
