@@ -164,3 +164,18 @@ body {
 #scrolldown {
 	opacity: var(--opacity, 1);
 }
+
+#img-container {
+	@apply delay-0 duration-1000 ease-out;
+	width: var(--offset, 70vh);
+	transform: translate(var(--toffset, 0), 0);
+}
+
+#title {
+	@apply absolute transition delay-0 duration-500 ease-out;
+	opacity: var(--opacity, 0);
+}
+
+#to-hide {
+	@apply transition delay-0 duration-500 ease-out;
+}
