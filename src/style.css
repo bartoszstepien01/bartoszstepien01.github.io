@@ -157,6 +157,7 @@ body {
 }
 
 #central {
+	/* weird */
 	transform: translate(0, var(--offset, 0));
 	opacity: var(--opacity, 1);
 }
