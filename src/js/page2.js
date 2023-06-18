@@ -84,6 +84,21 @@ export default class Page2 {
 			rightStripe.style.setProperty('--offset', '0');
 			toHide.style.opacity = '1';
 		}
+
+		let topStripe = this.dom.querySelector('.vertical-stripe-top');
+
+		let polygon = [
+			[topStripe.querySelector('.bl').getBoundingClientRect().x, topStripe.querySelector('.bl').getBoundingClientRect().y],
+			[topStripe.querySelector('.br').getBoundingClientRect().x, topStripe.querySelector('.br').getBoundingClientRect().y],
+			[topStripe.querySelector('.tr').getBoundingClientRect().x, topStripe.querySelector('.tr').getBoundingClientRect().y],
+			[topStripe.querySelector('.tl').getBoundingClientRect().x, topStripe.querySelector('.tl').getBoundingClientRect().y],
+		];
+
+		if (inside([e.x, e.y], polygon)) {
+			topStripe.style.setProperty('--offset', '1.1rem');
+		} else {
+			topStripe.style.setProperty('--offset', '0');
+		}
 	}
 
 	static onRoll(step, stepProgress, position, totalProgress) {
@@ -118,12 +133,20 @@ export default class Page2 {
 			imgContainer.classList.remove('transition-all');
 		}
 
+		let topStripe = this.dom.querySelector('.vertical-stripe-top');
+
+		if (stepProgress === 0) topStripe.classList.add('transition');
+		else topStripe.classList.remove('transition');
+
+		topStripe.style.setProperty('--offset', window.innerHeight * stepProgress + 'px');
+
 		leftStripe.style.setProperty('--offset', window.innerWidth * Math.min(stepProgress, 1)  + 'px');
 
 		rightStripe.style.setProperty('--offset', 90 * stepProgress + 'vh');
 		imgContainer.style.setProperty('--toffset', 90 * stepProgress + 'vh');
 
-		this.dom.querySelector('#central').style.setProperty('--offset', -20 * stepProgress + 'rem');
+		this.dom.querySelector('#central').style.transform = `translate(0, ${-20 * stepProgress}rem)`;
+		if(stepProgress === 0) this.dom.querySelector('#central').style.transform = '';
 		this.dom.querySelector('#central').style.setProperty('--opacity', 1 - 2 * stepProgress + '');
 	}
 }

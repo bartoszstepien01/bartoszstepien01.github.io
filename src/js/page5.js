@@ -1,10 +1,10 @@
 import { inside } from "./utils";
 
-export default class Page1 {
+export default class Page5 {
 	static dom;
 
 	constructor() {
-		if (this instanceof Page1) {
+		if (this instanceof Page5) {
 			throw Error('A static class cannot be instantiated.');
 		}
 	}
@@ -60,31 +60,5 @@ export default class Page1 {
 	}
 
 	static onRoll(step, stepProgress, position, totalProgress) {
-		let full = (window.innerWidth - 0.3 * window.innerHeight) / 2;
-
-		let leftStripe = this.dom.querySelector('.vertical-stripe-left');
-		let rightStripe = this.dom.querySelector('.vertical-stripe-right');
-
-		if (stepProgress === 0){
-			leftStripe.classList.add('transition');
-			rightStripe.classList.add('transition');
-		} else {
-			leftStripe.classList.remove('transition');
-			rightStripe.classList.remove('transition');
-		}
-
-		let topStripe = this.dom.querySelector('.vertical-stripe-top');
-
-		if (stepProgress === 0) topStripe.classList.add('transition');
-		else topStripe.classList.remove('transition');
-
-		topStripe.style.setProperty('--offset', window.innerHeight * stepProgress + 'px');
-
-		leftStripe.style.setProperty('--offset', full * Math.min(stepProgress, 1)  + 'px');
-		rightStripe.style.setProperty('--offset', -full * Math.min(stepProgress, 1) + 'px');
-
-		this.dom.querySelector('#central').style.transform = `translate(0, ${-20 * stepProgress}rem)`;
-		if(stepProgress === 0) this.dom.querySelector('#central').style.transform = '';
-		this.dom.querySelector('#central').style.setProperty('--opacity', 1 - 2 * stepProgress + '');
 	}
 }
