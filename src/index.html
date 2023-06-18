@@ -529,6 +529,7 @@
 		});
 
 		window.addEventListener("resize", function(evt) {
+			if (typeof screen.orientation !== 'undefined') return;
 			document.location.reload();
 		});
 
